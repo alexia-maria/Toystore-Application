@@ -1,0 +1,23 @@
+html {
+  font-size: 15px;
+}
+
+body {
+  --spatiere-pagina: 1px;
+  --padd: 1px;
+}
+
+#grid-pagina {
+  display: block;
+}
+
+body * {
+  animation: none;
+  transition: none;
+}
+
+.vtt {
+  width: 100%;
+  min-width: 50px;
+  max-width: 200px;
+}

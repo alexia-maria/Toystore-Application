@@ -1,0 +1,107 @@
+#hamburger,
+#ch-menu {
+  display: none;
+}
+
+body {
+  --btn_width: 150px;
+  --btn_height: 60px;
+  --menu_color: var(--culoare-fundal-inchis);
+  --btn_border_color: black;
+}
+
+nav {
+  width: 100%;
+  background-color: var(--menu_color);
+  height: var(--btn_height);
+}
+
+/*ul.menu {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  justify-content: left;
+}
+
+ul.menu li {
+  width: var(--btn_width);
+  height: var(--btn_height);
+  background-color: var(--menu_color);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid var(--btn_border_color);
+}
+
+ul.menu li a,
+ul.menu li div {
+  display: block;
+  line-height: var(--btn_height);
+  width: 100%;
+  height: 100%;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}*/
+
+ul.meniu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+ul.meniu > li {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: var(--latime-buton);
+}
+
+ul.meniu li {
+  width: var(--latime-buton);
+  height: var(--inaltime-meniu);
+  background-color: var(--culoare-meniu);
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid var(--culoare-border-buton);
+  transition: background-color 0.8s linear;
+  box-sizing: border-box;
+}
+ul.meniu li:hover {
+  overflow: visible;
+  background-color: pink; /* de setat cu variabila */
+}
+
+ul.meniu ul {
+  opacity: 0;
+  transition: all 0.8s linear;
+  transform: scale(0, 0);
+  transform-origin: center top;
+}
+
+ul.meniu li:hover ul {
+  opacity: 1;
+
+  transform: scale(1, 1);
+}
+
+ul.meniu li div,
+ul.meniu li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--text-meniu);
+  text-decoration: none;
+  font-weight: bold;
+  line-height: var(--inaltime-meniu);
+}
+/*
+ul.meniu > li:nth-child(even) {
+  background-color: skyblue;
+}
+ul.meniu > li:nth-child(odd) {
+  background-color: red;
+}
+*/
+
+#acasa-mediu {
+  display: none;
+}

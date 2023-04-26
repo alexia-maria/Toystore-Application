@@ -1,0 +1,88 @@
+@media print {
+  .banner {
+    display: block;
+    border: inset black 4px;
+    text-align: center;
+    box-sizing: border-box;
+    position: absolute;
+    justify-content: center;
+    width: 70%;
+    bottom: 0;
+    left: 15%;
+  }
+
+  #watermark {
+    opacity: 0.4;
+    display: block;
+    background: white;
+    border: 3px solid black;
+    border-radius: 10px;
+    bottom: 0;
+    right: 0;
+    height: 1cm;
+    weight: 4cm;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+  }
+
+  .link {
+    text-decoration: none;
+    color: var(--culoare_text);
+  }
+
+  #titlu {
+    text-align: center;
+    margin: auto;
+  }
+
+  ul.meniu {
+    display: block;
+    text-align: center;
+    margin: auto;
+    width: 20%;
+    page-break-after: always;
+    color: var(--culoare_text);
+  }
+
+  #produse {
+    page-break-before: always;
+  }
+
+  #grid-pagina {
+    display: block;
+    font-size: 10px;
+    box-sizing: border-box;
+    page-break-before: always;
+    background-color: white;
+  }
+
+  img,
+  video {
+    display: none;
+  }
+
+  .container-iframe {
+    display: none;
+  }
+
+  #link-top {
+    display: none;
+  }
+  #end {
+    page-break-before: always;
+  }
+  @page {
+    margin: 5px;
+    size: auto;
+  }
+
+  @page: left {
+    margin-left: 3cm;
+    margin-right: 1cm;
+  }
+  @page: right {
+    margin-right: 3cm;
+    margin-left: 1cm;
+  }
+}

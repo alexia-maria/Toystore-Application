@@ -1,0 +1,32 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  --spatiere-pagina: 4px;
+  --padd: 5px;
+}
+
+#grid-pagina {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "z-welcome z-welcome z-welcome"
+    "z-vandute z-vandute z-vandute"
+    "z-produse z-oferte z-informatii"
+    "z-intrebari z-anunturi z-copii";
+}
+body * {
+  animation: none;
+  transition: none;
+}
+
+.container-iframe iframe {
+  display: block;
+  width: 100%;
+}
+
+.vtt {
+  width: 100%;
+  min-width: 70px;
+  max-width: 200px;
+}

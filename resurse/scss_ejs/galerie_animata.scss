@@ -1,0 +1,6 @@
+@use "sass:list";
+@use "sass:math";
+
+@use "../resurse/scss_ejs/galerie_animata_frag" with (
+  $setare-server: <%- locals.nrimag %>
+);

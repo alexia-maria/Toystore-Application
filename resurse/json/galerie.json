@@ -1,0 +1,56 @@
+{
+  "cale_galerie": "resurse/imagini/galerie",
+  "imagini": [
+    {
+      "fisier": "alias.jpg",
+      "descriere": "Alias",
+      "luni": ["ianuarie", "februarie", "aprilie", "iunie"]
+    },
+    {
+      "fisier": "dixit.jpg",
+      "descriere": "Dixit",
+      "luni": ["ianuarie", "noiembrie", "aprilie", "iunie", "martie"]
+    },
+    {
+      "fisier": "rummi.jpg",
+      "descriere": "Remi",
+
+      "luni": ["noiembrie", "aprilie"]
+    },
+    {
+      "fisier": "activity.jpg",
+      "descriere": "Activity",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "apples.jpg",
+      "descriere": "Apples to Apples",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "whispers.jpg",
+      "descriere": "War",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "colectie.jpg",
+      "descriere": "100 de jocuri",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "trouble.jpg",
+      "descriere": "Trouble",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "dune.jpg",
+      "descriere": "Dune",
+      "luni": ["aprilie"]
+    },
+    {
+      "fisier": "sleepinggods.jpg",
+      "descriere": "Sleeping Gods",
+      "luni": ["aprilie"]
+    }
+  ]
+}

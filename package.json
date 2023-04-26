@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "pg": "^8.10.0",
+    "sharp": "^0.32.0"
+  },
+  "name": "proiect_tehnici_web",
+  "version": "1.0.0",
+  "description": "site-ul unui magazin de jucarii",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jucarii",
+    "copil",
+    "cadou",
+    "Funtopia"
+  ],
+  "author": "Alexia Vasilache",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.61.0"
+  }
+}

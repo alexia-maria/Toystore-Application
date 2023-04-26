@@ -1,0 +1,52 @@
+<section id="galerie-statica">
+  <h2>Galerie</h2>
+  <div id="grid-galerie">
+    <% for (let imag of locals.imagini) { let d=new Date(); var
+    v_luni=["ianuarie", "februarie",
+    "martie","aprilie","mai","iunie","iulie","august","septembrie","octombrie","noiembrie","decembrie"]
+    if (imag.luni && imag.luni.includes(v_luni[d.getMonth()])) {%>
+    <figure>
+      <picture>
+        <source srcset="<%- imag.fisier_mediu %>" media="(max-width:1000px)" />
+        <img src="<%- imag.fisier %>" alt="imagine" />
+      </picture>
+      <figcaption><%- imag.descriere %></figcaption>
+    </figure>
+    <% } %> <% } %>
+  </div>
+
+  <h2>Galerie animata</h2>
+      <div id="galerie_exemplu" class="galerie">
+        <div>
+            <figure>
+                <img src = "../../resurse/imagini/galerie/activity.jpg">
+                <figcaption>Activity</figcaption>
+            </figure>
+            <figure>
+                <img src = "../../resurse/imagini/galerie/alias.jpg">
+                <figcaption>Alias</figcaption>
+            </figure>
+            <figure>
+                <img src = "../../resurse/imagini/galerie/apples.jpg">
+                <figcaption>Apples</figcaption>
+            </figure>
+            <figure>
+                <img src = "../../resurse/imagini/galerie/colectie.jpg">
+                <figcaption>100 de jocuri</figcaption>
+            </figure>
+            <figure>
+                <img src = "../../resurse/imagini/galerie/dune.jpg">
+                <figcaption>Dune</figcaption>
+                </figure>
+
+            <figure>
+                <img src = "../../resurse/imagini/galerie/trouble.jpg">
+                <figcaption>Trouble</figcaption>
+                </figure>  
+                
+                <figure>
+                    <img src = "../../resurse/imagini/galerie/whispers.jpg">
+                    <figcaption>Whispers</figcaption>
+                    </figure>
+        </div>
+</section>

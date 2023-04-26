@@ -1,0 +1,40 @@
+/*body {
+  --btn_width: 150px;
+  --btn_height: 60px;
+}*/
+
+body {
+  --inaltime-meniu: 45px;
+  --latime-buton: 150px;
+  --culoare-meniu: var(--culoare_margini);
+  --culoare_fundal: #eea7d6;
+  --culoare-border-buton: black;
+  --inaltime-border: 1px;
+}
+
+nav {
+  font-size: 16px;
+}
+
+#ac {
+  display: none;
+}
+
+.pr2 {
+  display: block;
+  height: 100%;
+  line-height: var(--inaltime-meniu);
+}
+
+#acasa2 {
+  height: var(--inaltime-meniu);
+  line-height: var(--inaltime-meniu);
+}
+
+#acasa-mediu {
+  display: block;
+}
+
+#acasa {
+  display: none;
+}
