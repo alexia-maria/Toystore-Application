@@ -3,36 +3,42 @@
     <head>
         <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
         <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse">
-        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
+     <!--   <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" /> -->
         <title>Cofetăria Dulcelind - home</title>
         <%- include("../fragmente/head") %>     
         <script type="text/javascript" src=/resurse/js/produse.js></script>
 
     </head>
-    <body>
+    <body class = "light">
     <%- include("../fragmente/header") %>
 
     <main>
-        <label> Nume: <input type="text" id="inp-nume"></label>
+        <div class = "container">
+        <div class = "row">
+        <div class = "col-12 col-md-6 col-xl-3"><label> Nume: <input type="text" id="inp-nume"></label></b-col>
         <!--<label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label>-->
-        <div> Calorii:<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
-            <p><label>Dietetic (calorii &lt; 350)
-                <input id="i_rad1"  name="gr_rad" value="0:350" type="radio"/>
+        </div>
+        <div id = "butoane" class = "col-12 col-md-6 col-xl-3"> Numar de jucatori<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
+            <p><label>Jocuri singleplayer
+                <input id="i_rad1"  name="gr_rad" value="0:1" type="radio"/>
             </label></p>
-            <p><label>Mediu (350 &le; calorii &lt; 700)
-                <input id="i_rad2"  name="gr_rad" value="350:750" type="radio"/>
+            <p><label>Intre 2 si 4 
+                <input id="i_rad2"  name="gr_rad" value="2:4" type="radio"/>
             </label>
-            <p><label>Ridicat caloric (700 &le; calorii)
-                <input id="i_rad3" name="gr_rad" value="700:1000000000" type="radio"/>
+            <p><label>Mai mult de 5 
+                <input id="i_rad3" name="gr_rad" value="5:1000000000" type="radio"/>
             </label>
             <p><label>Toate
                 <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
             </label>
         </div>
+    
 
+        
+  <div class = "col-12 col-md-6 col-xl-3">  <label for = "inp-pret" class = "form-label"> Pret minim: <input type="range" class = "form-range" id="inp-pret" value="<%- locals.pretMin %>" min="<%- locals.pretMin %>"  max="<%- locals.pretMax %>"> <span id="infoRange">(0)</span></label>
+  </div>
 
-        <label> Pret minim: <input type="range" id="inp-pret" value="0" min="0"  max="70"> <span id="infoRange">(0)</span></label>
-        <label>Select simplu:
+  <div class = "col-12 col-md-6 col-xl-3">    <label>Select categorie de varsta:
             <select id="inp-categorie">
                 <option id="sel-toate" selected value="toate">toate</option>
                 <% for (let opt of locals.optiuni) { %>
@@ -40,12 +46,63 @@
                 <% } %>
             </select>
         </label>
-        <p>
-        <button id="filtrare">Filtreaza</button> 
+    </div> 
+        </div>
 
-        <button id="resetare">Reseteaza</button><br/>
-        <button id="sortCrescNume">Sorteaza crescator dupa pret si nume</button>
-        <button id="sortDescrescNume">Sorteaza descrescator dupa pret si nume</button>
+      <div class = "row"> <div class = "col-12 col-md-6 col-xl-3">  <label>Datalist:
+            <input list="id_lista" id="i_datalist">
+            <datalist id="id_lista">
+                <option id="sel-toate" selected value="toate">toate</option>
+                <% for (let di of locals.optiuniDatalist) { %>
+                    <option value="<%- di.unnest %>"><%- di.unnest %> </option>
+                <% } %> 
+            </datalist>
+        </label>
+    </div>
+
+    <div class = "col-12 col-md-6 col-xl-3"> Modul de expediere
+         <label id = "exped"><%- locals.optiuniExpediere[0].unnest %>
+            <input id="i_check1" name="gr_chck" value="<%- locals.optiuniExpediere[0].unnest %>" type="checkbox"/>
+        </label>
+        
+        <label id = "exped"><%- locals.optiuniExpediere[1].unnest %>
+            <input id="i_check2" name="gr_chck" value="<%- locals.optiuniExpediere[1].unnest %>" type="checkbox"/>
+        </label>
+    
+        <label id = "exped">Toate
+            <input id="i_check3" name="gr_chck" checked value="toate" type="checkbox"/>
+        </label>
+    </div>
+
+<div class = "col-12 col-md-6 col-xl-3">
+    <div class = "form-floating">
+
+    
+            <textarea id="i_textarea" class="form-control"  id="floatingTextarea2" style="height: 100px">orice</textarea>
+            <label for="floatingTextarea2">Culoare</label>
+        
+    </div>
+    
+    </div>   
+
+      <div class="col-12 col-md-6 col-xl-3">  <label>Select categorie de jucarie:
+            <select id="inp-jucarie" multiple size = "4">
+                <option id="sel-toate"  value="toate">toate</option>
+                <% for (let juc of locals.optiuniCategorie) { %>
+                    <option value="<%- juc.unnest %>" selected><%- juc.unnest %> </option>
+                <% } %>
+            </select>
+        </label>
+    </div>
+      </div>
+        </div>
+
+        <p>
+        <button id="filtrare" class = "btn btn-primary border-1 border-light"><span class="bi bi-filter"></span>|Filtreaza</button> 
+
+        <button id="resetare"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-clockwise"></span>|Reseteaza</button><br/>
+        <button id="sortCrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-up-right"></span>|Sorteaza crescator dupa pret si nume</button>
+        <button id="sortDescrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-down-right"></span>|Sorteaza descrescator dupa pret si nume</button>
         
         </p>
         
@@ -58,19 +115,22 @@
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
                         <div class="info-prod">
                             <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="calorii">Calorii: <span class="val-calorii"><%- prod.calorii%></span></p>
-                            <p class="gramaj">Gramaj: <span class="val-gramaj"><%- prod.gramaj%></span></p>
+                            <p class="varsta">Categorie de varsta: <span class="val-varsta"><%- prod.varsta%></span></p>
+                            <p class="culoare">Culoare: <span class="val-culoare"><%- prod.culoare%></span></p>
+                            <p class="numar_jucatori">Numar jucatori: <span class="val-nrjuc"><%- prod.numar_jucatori%></span></p>
+                            <p class="disponibilitate">Disponibilitate:<span class="val-disponibil"><%- prod.disponibilitate%></span></p>
+                            <p class="expediere">Expediere:<span class="val-expediere"><%- prod.expediere%></span></p>
                         </div>
                         <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
                         <figure>
-                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/galerie/<%-prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
                         </figure>
                         <label class="selecteaza-cos">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
                         </label>
                     </article>
-                <% }%>
+                <% }%> 
             </div>
         </section>
     </main>

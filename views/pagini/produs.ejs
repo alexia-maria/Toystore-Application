@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta
+      name="description"
+      content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier."
+    />
+    <meta
+      name="keywords"
+      content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse"
+    />
+
+    <title>Cofetăria Dulcelind - home</title>
+    <%- include("../fragmente/head") %>
+    <link href="/resurse/css/produs.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body class="light">
+    <%- include("../fragmente/header") %>
+
+    <main>
+      <section>
+        <h2>Pagină produs</h2>
+        <article id="art-produs">
+          <h3><span class="nume"><%- locals.prod.nume %></span></h3>
+          <p>Pret: <span class="pret"><%- locals.prod.pret %> </span></p>
+          <p>
+            Descriere:
+            <span class="descriere"><%- locals.prod.descriere %> </span>
+          </p>
+          <p>
+            Categorie
+            <span class="categorie"><%- locals.prod.categorie %> </span>
+          </p>
+          <p>
+            Varsta recomandata:
+            <span class="varsta"><%- locals.prod.varsta %> </span>
+          </p>
+          <p>
+            Disponibilitate:
+            <span class="disponibilitate"
+              ><%- locals.prod.disponibilitate %>
+            </span>
+          </p>
+          <p>
+            Expediere disponibila:
+            <span class="expediere"><%- locals.prod.expediere %> </span>
+          </p>
+          <p>
+            Numar jucatori:
+            <span class="numar_jucatori"
+              ><%- locals.prod.numar_jucatori %>
+            </span>
+          </p>
+          <p>
+            Numar piese:
+            <span class="numar_piese"><%- locals.prod.numar_piese %> </span>
+          </p>
+          <p>
+            Culoare:
+            <span class="culoare"><%- locals.prod.culoare %> </span>
+          </p>
+          <p>
+            Componente:
+            <span class="componente"><%- locals.prod.componente %> </span>
+          </p>
+          <p>
+            Recoamndat copiilor sub 3 ani:
+            <span class="recomandat_sub3"
+              ><%- locals.prod.recomandat_sub3 %>
+            </span>
+          </p>
+          <p>
+            Data adăugare:
+            <span class="categorie"><%- locals.prod.data_adaugare %> </span>
+          </p>
+          <figure class="imag-produs">
+            <img
+              src="/resurse/imagini/produse/<%- locals.prod.imagine %>"
+              alt="[imagine <%- locals.prod.nume %>]"
+            />
+          </figure>
+        </article>
+      </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+  </body>
+</html>

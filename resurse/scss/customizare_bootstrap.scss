@@ -3,7 +3,7 @@
   $secondary: rgb(248, 109, 109),
   $dark: rgb(250, 202, 112),
   $success: #6b2b56,
-  $light: #ffc3b9,
+  $light: #eea7d6,
   $font-size-base: 1.1rem,
   $h1-font-size: 1.1rem * 2.4,
   $h2-font-size: 1.1rem * 2.1,
@@ -31,12 +31,15 @@
   $link-decoration: none,
   $link-shade-percentage: 40%,
   $paragraph-margin-bottom: 1.5rem,
-  $border-width: 0.5px,
+  $border-width: 1.5px,
   $border-widths: (
     1: 0.5px,
     2: 1px,
     3: 1.5px,
     4: 2px,
     5: 2.5px,
-  )
+  ),
+  $form-range-thumb-width: 1.5rem,
+  $form-range-thumb-bg: #6b2b56,
+  $form-range-track-bg: rgb(215, 210, 210)
 );

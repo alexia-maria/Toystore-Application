@@ -39,8 +39,16 @@ $setare-server: black !default;
   animation-duration: 21s;
   transform-origin: center center;
 }
+
+@for $a from 1 through nrimag {
+  #galerie-animata figure:nth-of-type(7) {
+    /* cea mai de deasupra*/
+    animation-delay: $a * 3s;
+  }
+}
+/*
 #galerie-animata figure:nth-of-type(7) {
-  /* cea mai de deasupra*/
+   cea mai de deasupra
   animation-delay: 0s;
 }
 #galerie-animata figure:nth-of-type(6) {
@@ -61,7 +69,7 @@ $setare-server: black !default;
 #galerie-animata figure:nth-of-type(1) {
   animation-delay: 18s;
 }
-
+*/
 /*cum calculam timpii:
 - avem 7 poze; vrem pentru fiecare un timp de afisare de 1.5 secunde si o trecere spre urmatoarea poza de 1.5 secunde
 - rezulta 3 secunde pentru fiecare imagine
@@ -78,34 +86,44 @@ x%........3s
   0% {
     z-index: 10;
     opacity: 1;
-  } /*perioada 0-5% in care se afiseaza fara efect */
+    clip-path: circle(90%);
+  } /*perioada 0-7% in care se afiseaza fara efect */
   7.142857% {
-    transform: $transformare_i;
-  } /*transformare inceput disparitie*/
+    /* transform: skewX(0deg);*/
+    clip-path: circle(75%);
+  }
   12% {
     opacity: 1;
+    clip-path: circle(50%);
+    transform: rotate(0deg);
+    transform-origin: center;
   } /* de  aici doresc sa descresc si opacitatea;*/
-  14.285714% {
+  100/$nrimag% {
     z-index: 10;
     opacity: 0;
-    transform: $transformare_f;
+    clip-path: circle(0%);
+    transform: rotate(359deg);
+    /* transform: skewX(90deg);*/
   }
   14.285715% {
     z-index: -10;
-    transform: $transformare_i;
+    /* transform: skewX(0deg);*/
   } /* il ascund cat mai in spate sa nu vina peste imaginile care erau mai sus in html decat el*/
 
   85.714287% {
     opacity: 0;
-    transform: $transformare_i;
+    /*transform: skewX(0deg);*/
+    clip-path: circle(0%);
     z-index: -10;
   }
   85.714288% {
-    z-index: 0;
+    transform: rotate(0deg);
   } /*setez z-index la 0 ca sa revina la ordinea normala de afisare*/
   100% {
     opacity: 1;
     z-index: 0;
+    clip-path: circle(90%);
+    transform: rotate(359deg);
   }
 }
 

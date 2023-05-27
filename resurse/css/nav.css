@@ -6,7 +6,7 @@
 body {
   --inaltime-meniu: 45px;
   --latime-buton: 150px;
-  --culoare-meniu: var(--culoare_margini);
+  --culoare-meniu: var(--culoare-grid);
   --culoare_fundal: #eea7d6;
   --culoare-border-buton: black;
   --inaltime-border: 1px;
@@ -31,19 +31,16 @@ ul.meniu {
   justify-content: center;
   flex-wrap: wrap;
 }
-
 ul.meniu > li {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: var(--latime-buton);
   transition: all 1s linear;
 }
-
 ul.meniu > li:hover {
   overflow: visible;
-  background-color: var(--culoare_fundal);
+  background-color: var(--culoare-meniu);
 }
-
 ul.meniu li {
   width: var(--latime-buton);
   height: var(--inaltime-meniu);
@@ -58,12 +55,10 @@ ul.meniu li {
   transition: all 1s linear;
   position: relative;
 }
-
 ul.meniu li:hover ul {
   opacity: 1;
   transform: scale(1, 1);
 }
-
 ul.meniu a,
 ul.meniu div {
   display: block;
@@ -74,7 +69,6 @@ ul.meniu div {
   text-decoration: none;
   font-weight: bold;
 }
-
 ul.meniu ul {
   padding: 0;
   margin: 0;
@@ -86,7 +80,6 @@ ul.meniu ul {
   transform-origin: top;
   transition: all 1s linear;
 }
-
 ul.meniu ul li::before {
   display: block;
   content: " ";
@@ -97,12 +90,16 @@ ul.meniu ul li::before {
   top: 0;
   bottom: 0;
   /* background-image: linear-gradient(to left, transparent, black, grey, white);*/
-  background-image: linear-gradient(to left, transparent, var(--culoare-meniu), var(--culoare_fundal));
+  background-image: linear-gradient(
+    to left,
+    transparent,
+    var(--culoare-meniu),
+    var(--culoare-meniu)
+  );
   transition: all 0.5s linear;
   transform: scale(0, 0);
   transform-origin: top;
 }
-
 ul.meniu ul li::after {
   content: " ";
   display: block;
@@ -113,12 +110,16 @@ ul.meniu ul li::after {
   top: 0;
   bottom: 0;
   /* background-image: linear-gradient(to right, transparent, black, grey, white);*/
-  background-image: linear-gradient(to right, transparent, var(--culoare-meniu), var(--culoare_fundal));
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--culoare-meniu),
+    var(--culoare-meniu)
+  );
   transition: all 0.5s linear;
   transform: scale(0, 0);
   transform-origin: top;
 }
-
 ul.meniu ul li:hover::before,
 ul.meniu ul li:hover::after {
   height: 100%;
@@ -128,7 +129,6 @@ ul.meniu ul li:hover::after {
 #prod {
   transition: all 1s linear;
 }
-
 #prod:hover {
   font-size: 20px;
 }
@@ -136,7 +136,6 @@ ul.meniu ul li:hover::after {
 #ac {
   transition: all 1s linear;
 }
-
 #ac:hover {
   font-size: 20px;
 }
@@ -144,4 +143,3 @@ ul.meniu ul li:hover::after {
 .pr2 {
   display: none;
 }
-

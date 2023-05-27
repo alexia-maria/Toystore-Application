@@ -4,6 +4,13 @@ const path = require("path");
 const sharp = require("sharp");
 var sass = require("sass");
 const { Client } = require("pg");
+
+//const AccessBD = require("./module_proprii/accessbd.js");
+/*
+AccessBD.getInstanta().select({tabel:"prajituri", campuri:["nume", "pret", "calorii"], conditiiAnd:["pret>7"]}, function(err, rez){
+  console.log(err);
+  console.log(rez);
+})*/
 var client = new Client({
   database: "alexia",
   user: "useralexia",
@@ -25,7 +32,7 @@ obGlobal = {
 };
 
 client.query(
-  "select * from unnest(enum_range(null::categ_prajitura))",
+  "select * from unnest(enum_range(null::varsta))",
   function (err, rezCategorie) {}
 );
 console.log("Folder proiect", __dirname);
@@ -119,6 +126,7 @@ app.get("/ceva", function (req, res) {
 });
 
 app.get(["/index", "/", "/home"], function (req, res) {
+  res.setHeader("Permissions-Policy", "ch-ua-form-factor");
   res.render("pagini/index", {
     ip: req.ip,
     imagini: obGlobal.obImagini.imagini,
@@ -165,43 +173,97 @@ app.get("/produse", function (req, res) {
   //TO DO query pentru a selecta toate produsele
   //TO DO se adauaga filtrarea dupa tipul produsului
   //TO DO se selecteaza si toate valorile din enum-ul categ_prajitura
+
   client.query(
-    "select * from unnest(enum_range(null::categ_prajitura))",
+    "select * from unnest(enum_range(null::varsta_rec))",
     function (err, rezCategorie) {
-      // console.log(err);
-      // console.log(rez);
       let conditieWhere = "";
-      if (req.query.tip) {
-        conditieWhere = `where tip_produs = ${req.query.tip}`;
+      if (req.query.varsta) {
+        conditieWhere = ` and varsta = '${req.query.varsta}'`;
       }
 
       client.query(
-        "select * from prajituri " + conditieWhere,
-        function (err, rez) {
-          console.log(300);
-          if (err) {
-            console.log(err);
-            afiseazaEroare(res, 2);
-          } else
-            res.render("pagini/produse", {
-              produse: rez.rows,
-              optiuni: rezCategorie.rows,
-            });
+        "select * from unnest(enum_range(null::disponibil))",
+        function (err, rezDisp) {
+          let conditieWhere2 = "";
+          if (req.query.disponibilitate) {
+            conditieWhere2 = ` and disponibilitate = '${req.query.disponibilitate}'`;
+          }
+
+          client.query(
+            "select * from unnest(enum_range(null::exped))",
+            function (err, rezExped) {
+              let conditieWhere3 = "";
+              if (req.query.expediere) {
+                conditieWhere = ` and expediere = '${req.query.expediere}'`;
+              }
+
+              client.query(
+                "select * from unnest(enum_range(null::categ_jucarie))",
+                function (err, rezJuc) {
+                  let conditieWhere4 = "";
+                  if (req.query.categorie) {
+                    conditieWhere = ` and expediere = '${req.query.categorie}'`;
+                  }
+                  client.query(
+                    "select * from jucarii order by pret asc",
+                    function (err, rezPret) {
+                      console.log(rezPret);
+
+                      client.query(
+                        " select * from jucarii where 1 = 1 " +
+                          conditieWhere +
+                          conditieWhere2 +
+                          conditieWhere3 +
+                          conditieWhere4,
+                        function (err, rez) {
+                          console.log(rezPret.rowCount);
+                          console.log(rezPret.rows[0].pret);
+                          console.log(rezPret.rows[rezPret.rowCount - 1].pret);
+                          console.log(rezExped.rows);
+                          console.log(rezJuc.rows);
+
+                          if (err) {
+                            console.log(err);
+                            afiseazaEroare(res, 2);
+                          } else
+                            res.render("pagini/produse", {
+                              produse: rez.rows,
+                              optiuniDatalist: rezDisp.rows,
+                              optiuni: rezCategorie.rows,
+                              pretMin: rezPret.rows[0].pret,
+                              pretMax: rezPret.rows[rezPret.rowCount - 1].pret,
+                              optiuniExpediere: rezExped.rows,
+                              optiuniCategorie: rezJuc.rows,
+                            });
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
         }
       );
     }
   );
 });
+//});
+//});
 
 app.get("/produs/:id", function (req, res) {
   console.log(req.params);
 
-  client.query(" TO DO ", function (err, rezultat) {
-    if (err) {
-      console.log(err);
-      afisareEroare(res, 2);
-    } else res.render("pagini/produs", { prod: "" });
-  });
+  client.query(
+    `select * from jucarii where id = ${req.params.id}`,
+    function (err, rezultat) {
+      if (err) {
+        console.log(err);
+        afiseazaEroare(res, 2);
+      } else res.render("pagini/produs", { prod: rezultat.rows[0] });
+    }
+  );
 });
 
 app.get("/*", function (req, res) {
@@ -227,7 +289,23 @@ app.get("/*", function (req, res) {
     }
   }
 });
+/*
+document.getElementById("adauga").onclick = function () {
+  var p = document.createElement("p");
+  p.innerHTML = "ceva";
+  // document.body.appendChild(p);
+  document.body.insertBefore(p, this);
+  document.body.appendChild(document.getElementById("de_mutat"));
 
+  document.getElementById("sterge").onclick = function () {
+    let paragrafe = document.getElementsByTagName("p");
+    if (paragrafe.length) {
+      let ultimul = paragrafe[paragrafe.lenght - 1];
+      ultimul.remove();
+    }
+  };
+};
+*/
 function initializeazaErori() {
   var continut = fs
     .readFileSync(__dirname + "/resurse/json/erori.json")

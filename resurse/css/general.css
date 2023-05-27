@@ -40,18 +40,67 @@ body {
   --c2: #b74992;
   --spatiere-pagina: 8px;
   --padd: 20px;
+  --culoare-fundal2: #a7ffcc;
+  --culoare-text2: #1e9e53;
+  --culoare-margini2: #9e1d13;
+  --rosu2: #eb5044;
+  --verde2: #44eb89;
+  --culoare-fundal3: #ffdee3;
+  --culoare-text3: #c00000;
+  --culoare-margini3: #ff3334;
+  --roz3: #ff6f77;
+  --rozdiferit3: #ff8896;
 }
 
-body {
+body.light {
   background-color: var(--culoare_fundal);
   color: var(--culoare_text);
   padding-left: var(--spatiere-pagina);
   padding-right: var(--spatiere-pagina);
   width: 98%;
   margin: 0 auto;
+  --culoare-grid: var(--culoare_margini);
+  --grid-diferit: var(--culoare_text);
+  --fundal-despre: #f2aada;
+  --culoare-ifr: var(--culoare_text);
+  --link-vizitat: var(--culoare_text);
+}
+
+body.holiday {
+  background-color: var(--culoare-fundal2);
+  color: var(--culoare-text2);
+  border: var(--culoare-margini2);
+  padding-left: var(--spatiere-pagina);
+  padding-right: var(--spatiere-pagina);
+  width: 98%;
+  margin: 0 auto;
+  --culoare-grid: var(--culoare-margini2);
+  --grid-diferit: var(--rosu2);
+  --fundal-despre: var(--verde2);
+  --culoare-ifr: var(--culoare-text2);
+  --link-vizitat: var(--rosu2);
+}
+
+body.valentine {
+  background-color: var(--culoare-fundal3);
+  color: var(--culoare-text3);
+  border: var(--culoare-margini3);
+  padding-left: var(--spatiere-pagina);
+  padding-right: var(--spatiere-pagina);
+  width: 98%;
+  margin: 0 auto;
+  --culoare-grid: var(--culoare-margini3);
+  --grid-diferit: var(--roz3);
+  --fundal-despre: var(--rozdiferit3);
+  --culoare-ifr: var(--culoare-text3);
+  --link-vizitat: var(--roz3);
+}
+.btn-primary {
+  --bs-btn-color: #000;
+  --bs-btn-bg: var(--culoare-grid);
 }
 #grid-pagina > * {
-  border: 1px solid var(--culoare_margini);
+  border: 1px solid var(--culoare-grid);
   padding: var(--padd);
   border-radius: 25px;
 }
@@ -60,16 +109,16 @@ body {
   border: 2px solid var(--culoare_text);
 }
 #vandute {
-  border: 0.1px solid var(--culoare_margini);
+  border: 0.1px solid var(--culoare-grid);
 }
 
 #oferte {
   border-width: thick;
-  border-color: var(--culoare_text);
+  border-color: var(--grid-diferit);
 }
 
 #copii {
-  background-color: var(--culoare_text);
+  background-color: var(--grid-diferit);
   color: var(--culoare_fundal);
 }
 
@@ -153,9 +202,10 @@ table:hover {
 }
 
 .aifr {
+  color: var(--link-vizitat);
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  background: var(--culoare_margini);
+  background: var(--culoare-grid);
   padding: 20px;
   width: 80px;
   height: 40px;
@@ -237,10 +287,10 @@ video {
 }
 
 .link {
-  color: var(--culoare_margini);
+  color: var(--culoare-grid);
   background-image: radial-gradient(
-    var(--culoare_margini) 0%,
-    var(--culoare_margini) 40%,
+    var(--culoare-grid) 0%,
+    var(--culoare-grid) 40%,
     transparent 60%,
     transparent 100%
   );
@@ -255,7 +305,7 @@ video {
 }
 
 .link:visited {
-  color: var(--culoare_text);
+  color: var(--link-vizitat);
 }
 
 .link:active {
@@ -283,19 +333,23 @@ a.link[href^="http"]:hover:before {
 }
 
 .linkdespre {
-  color: var(--culoare_margini);
+  color: var(--culoare-grid);
 }
 
 #par {
   /* background-color: #f088ce;*/
-  background-color: #f2aada;
+  background-color: var(--fundal-despre);
   background-image: url("../imagini/back.png");
   background-position: right bottom;
   background-repeat: no-repeat;
-  border: 5px solid var(--culoare_margini);
+  border: 5px solid var(--culoare-grid);
   border-radius: 25px;
   padding-left: 10px;
   padding-right: 400px;
+}
+a {
+  color: var(--culoare-grid);
+  text-decoration: none;
 }
 
 @keyframes anim {
@@ -468,7 +522,7 @@ hr {
 }
 
 ::selection {
-  color: var(--culoare_margini);
+  color: var(--culoare-grid);
   background-color: white;
   text-decoration: underline var(--c1);
 }

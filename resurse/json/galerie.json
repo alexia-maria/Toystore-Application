@@ -4,53 +4,53 @@
     {
       "fisier": "alias.jpg",
       "descriere": "Alias",
-      "luni": ["ianuarie", "februarie", "aprilie", "iunie"]
+      "luni": ["ianuarie", "februarie", "mai", "iunie"]
     },
     {
       "fisier": "dixit.jpg",
       "descriere": "Dixit",
-      "luni": ["ianuarie", "noiembrie", "aprilie", "iunie", "martie"]
+      "luni": ["ianuarie", "noiembrie", "mai", "iunie", "martie"]
     },
     {
       "fisier": "rummi.jpg",
       "descriere": "Remi",
 
-      "luni": ["noiembrie", "aprilie"]
+      "luni": ["noiembrie", "mai"]
     },
     {
       "fisier": "activity.jpg",
       "descriere": "Activity",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "apples.jpg",
       "descriere": "Apples to Apples",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "whispers.jpg",
       "descriere": "War",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "colectie.jpg",
       "descriere": "100 de jocuri",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "trouble.jpg",
       "descriere": "Trouble",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "dune.jpg",
       "descriere": "Dune",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     },
     {
       "fisier": "sleepinggods.jpg",
       "descriere": "Sleeping Gods",
-      "luni": ["aprilie"]
+      "luni": ["mai"]
     }
   ]
 }
