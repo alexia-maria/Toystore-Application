@@ -4,6 +4,10 @@ const path = require("path");
 const sharp = require("sharp");
 var sass = require("sass");
 const { Client } = require("pg");
+const { Utilizator } = require("./module_proprii/utilizator");
+const formidable = require("formidable");
+const session = require("express-session");
+const Drepturi = require("./module_proprii/drepturi.js");
 
 //const AccessBD = require("./module_proprii/accessbd.js");
 /*
@@ -39,7 +43,7 @@ console.log("Folder proiect", __dirname);
 console.log("Nume fisier", __filename);
 console.log("Director de lucru", process.cwd());
 
-vectorFoldere = ["temp", "temp1", "backup"];
+vectorFoldere = ["temp", "temp1", "backup", "poze_uploadate"];
 for (let folder of vectorFoldere) {
   let caleFolder = path.join(__dirname, folder);
 
@@ -107,12 +111,18 @@ app.set("view engine", "ejs");
 app.use("/resurse", express.static(__dirname + "/resurse"));
 
 app.use("/node_modules", express.static(__dirname + "/node_modules"));
-
-app.use("/", function (req, res, next) {
+/*
+app.use("/*", function (req, res, next) {
   res.locals.optiuniMeniu = obGlobal.optiuniMeniu;
+  res.locals.Drepturi = Drepturi;
+  if (req.session.utilizator) {
+    req.utilizator = res.locals.utilizator = new Utilizator(
+      req.session.utilizator
+    );
+  }
   next();
 });
-
+*/
 app.use(/^\/resurse(\/[a-zA-Z0-9]*(?!\.)[a-zA-Z0-9]*)*$/, function (req, res) {
   afiseazaEroare(res, 403);
 });
@@ -125,11 +135,14 @@ app.get("/ceva", function (req, res) {
   res.send("altceva");
 });
 
-app.get(["/index", "/", "/home"], function (req, res) {
-  res.setHeader("Permissions-Policy", "ch-ua-form-factor");
+app.get(["/index", "/", "/home", "/login"], function (req, res) {
+  /*let sir = req.session.mesajLogin;
+  req.session.mesajLogin = null;
+  res.setHeader("Permissions-Policy", "ch-ua-form-factor");*/
   res.render("pagini/index", {
     ip: req.ip,
     imagini: obGlobal.obImagini.imagini,
+    //mesajLogin: sir,
   });
 });
 
@@ -266,6 +279,81 @@ app.get("/produs/:id", function (req, res) {
   );
 });
 
+app.post("/inregistrare", function (req, res) {
+  var username;
+  var poza;
+  console.log("ceva");
+  var formular = new formidable.IncomingForm();
+  formular.parse(req, function (err, campuriText, campuriFisier) {
+    //4
+    console.log("Inregistrare:", campuriText);
+
+    console.log(campuriFisier);
+    var eroare = "";
+
+    var utilizNou = new Utilizator();
+    try {
+      utilizNou.setareNume = campuriText.nume;
+      utilizNou.setareUsername = campuriText.username;
+      utilizNou.email = campuriText.email;
+      utilizNou.prenume = campuriText.prenume;
+
+      utilizNou.parola = campuriText.parola;
+      utilizNou.culoare_chat = campuriText.culoare_chat;
+      utilizNou.poza = poza;
+      Utilizator.getUtilizDupaUsername(
+        campuriText.username,
+        {},
+        function (u, parametru, eroareUser) {
+          if (eroareUser == -1) {
+            //nu exista username-ul in BD
+            utilizNou.salvareUtilizator();
+          } else {
+            eroare += "Mai exista username-ul";
+          }
+
+          if (!eroare) {
+            res.render("pagini/inregistrare", {
+              raspuns: "Inregistrare cu succes!",
+            });
+          } else
+            res.render("pagini/inregistrare", { err: "Eroare: " + eroare });
+        }
+      );
+    } catch (e) {
+      console.log(e);
+      eroare += "Eroare site; reveniti mai tarziu";
+      console.log(eroare);
+      res.render("pagini/inregistrare", { err: "Eroare: " + eroare });
+    }
+  });
+  formular.on("field", function (nume, val) {
+    // 1
+
+    console.log(`--- ${nume}=${val}`);
+
+    if (nume == "username") username = val;
+  });
+  formular.on("fileBegin", function (nume, fisier) {
+    //2
+    console.log("fileBegin");
+
+    console.log(nume, fisier);
+    //TO DO in folderul poze_uploadate facem folder cu numele utilizatorului
+    let folderUser = path.join(__dirname, "poze_uploadate", username);
+    //folderUser=__dirname+"/poze_uploadate/"+username
+    console.log(folderUser);
+    if (!fs.existsSync(folderUser)) fs.mkdirSync(folderUser);
+    fisier.filepath = path.join(folderUser, fisier.originalFilename);
+    poza = fisier.originalFilename;
+    //fisier.filepath=folderUser+"/"+fisier.originalFilename
+  });
+  formular.on("file", function (nume, fisier) {
+    //3
+    console.log("file");
+    console.log(nume, fisier);
+  });
+});
 app.get("/*", function (req, res) {
   console.log("cale:", req.url);
   try {

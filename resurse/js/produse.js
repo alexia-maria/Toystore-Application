@@ -1,3 +1,18 @@
+function setCookie(nume, val, timpExpirare) {
+  //timpExpirare in milisecunde
+  d = new Date();
+  d.setTime(d.getTime() + timpExpirare);
+  document.cookie = `${nume}=${val}; expires=${d.toUTCString()}`;
+}
+
+function getCookie(nume) {
+  vectorParametri = document.cookie.split(";"); // ["a=10","b=ceva"]
+  for (let param of vectorParametri) {
+    if (param.trim().startsWith(nume + "=")) return param.split("=")[1];
+  }
+  return null;
+}
+
 window.addEventListener("load", function () {
   document.getElementById("inp-pret").oninput = function () {
     document.getElementById("infoRange").innerHTML = `(${this.value})`;
@@ -189,6 +204,8 @@ window.addEventListener("load", function () {
   document.getElementById("sortDescrescNume").onclick = function () {
     sortare(-1);
   };
+
+  document.getElementById("ok2").onclick = checkCookie;
 
   window.onkeydown = function (e) {
     console.log(e);

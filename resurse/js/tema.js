@@ -1,5 +1,6 @@
 tema = localStorage.getItem("tema");
 let arrayT = ["light", "holiday", "valentine"];
+console.log(tema);
 
 window.addEventListener("DOMContentLoaded", function () {
   let i = 0;

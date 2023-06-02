@@ -653,3 +653,42 @@ hr {
     transform: rotate(359deg);
   }
 }
+@keyframes animban {
+  0% {
+    background-color: var(--c1);
+    border-color: var(--c2);
+  }
+  50% {
+    background-color: var(--c2);
+    border-color: var(--c1);
+  }
+  100% {
+    background-color: var(--c1);
+    border-color: var(--c2);
+  }
+}
+
+@keyframes animp {
+  0% {
+    text-align: right;
+  }
+  100% {
+    transform: translateX(-100%);
+    text-align: left;
+  }
+}
+#cbanner {
+  bottom: 0;
+  width: 100vw;
+  animation-name: animban;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#banner {
+  animation-name: animp;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+}

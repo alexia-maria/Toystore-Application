@@ -27,4 +27,15 @@ window.addEventListener("load", function () {
     setCookie("acceptat_banner", true, 60000);
     document.getElementById("banner").style.display = "none";
   };
+
+  if (getCookie("cookie_buton")) {
+    document.getElementById("ck2").style.display = "none";
+  }
+
+  this.document.getElementById("ok2").onclick = function () {
+    if (getCookie("acceptat_banner")) {
+      setCookie("cookie_buton", true, 2000);
+      document.getElementById("ck2").style.display = "none";
+    }
+  };
 });

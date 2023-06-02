@@ -46,6 +46,31 @@
       <li class="pr"><a href="/despre">Despre</a></li>
       <li class="pr"><a href="/galerie">Galerie</a></li>
       <li class="pr"><a href="/produse">Prod</a></li>
+      <li class="pr"><a href="/inregistrare">Inregistrare</a></li>
     </ul>
   </nav>
+  <% if(!locals.utilizator) { %>
+  <form
+    id="form_inreg"
+    method="post"
+    class="date"
+    action="/login"
+    enctype="multipart/form-data"
+  >
+    <p>
+      <label>
+        Username:
+        <input type="text" name="username" id="inp-username" value="required" />
+      </label>
+    </p>
+    <p>
+      <label>
+        Parola:
+        <input id="parl" type="password" required name="parola" value="" />
+      </label>
+    </p>
+    <p><input type="submit" value="Logare" /></p>
+  </form>
+  <p><%- locals.eroareLogin %></p>
+  <% } else {%> <%- locals.succesLogin %> <% } %>hv
 </main>
