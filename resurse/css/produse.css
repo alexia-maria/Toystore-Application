@@ -1,0 +1,80 @@
+main {
+  --padd-main: 1rem;
+  padding-left: var(--padd-main);
+  padding-right: var(--padd-main);
+}
+
+.grid-produse {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+}
+.grid-produse .produs {
+  border-radius: 3rem;
+  box-shadow: 0px 0px 0.8rem 0.5rem grey;
+  overflow: hidden;
+}
+
+.grid-produse .produs h3 {
+  background-color: var(--culoare_margini);
+  text-align: center;
+  margin-top: 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.grid-produse .produs h3 a {
+  color: black;
+}
+.grid-produse .produs h3 a:hover {
+  color: var(--c1);
+}
+.grid-produse .produs figure {
+  text-align: center;
+}
+.grid-produse .produs figure img {
+  border: 0.5px solid black;
+}
+.nume {
+  display: flex;
+  background-color: var(--c2);
+  color: black;
+  width: fit-content;
+}
+/*
+.grid-produse .produs p.categorie {
+  text-align: center;
+  font-weight: bold;
+}
+
+.info-produse {
+  background-color: var(--cl-marcare);
+  padding: 0.2rem;
+  box-shadow: 0px 0px 0.5rem 0.15rem grey;
+}
+*/
+.produs {
+  position: relative;
+}
+.selecteaza-cos {
+  display: inline-block;
+  background-color: var(--c2);
+  color: black;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  padding: 0.3rem;
+  border: 2px solid transparent;
+}
+
+.selecteaza-cos:hover {
+  background-color: var(--culoare_margini);
+
+  border: 1px solid var(--c2);
+}
+
+#info-suma {
+  border: 1px solid var(--culoare_margini);
+}

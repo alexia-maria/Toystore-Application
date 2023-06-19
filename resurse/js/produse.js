@@ -13,19 +13,64 @@ function getCookie(nume) {
   return null;
 }
 
+function replaceAtIndex(character, word, index) {
+  var tempStr = "";
+
+  for (var i = 0; i < word.length; i++) {
+    if (i == index) {
+      tempStr += character;
+    } else {
+      tempStr += word[i];
+    }
+  }
+
+  return tempStr;
+}
+
 window.addEventListener("load", function () {
+  let iduriProduse = localStorage.getItem("cos_virtual");
+  iduriProduse = iduriProduse ? iduriProduse.split(",") : []; //["3","1","10","4","2"]
+
+  for (let idp of iduriProduse) {
+    let ch = document.querySelector(`[value='${idp}'].select-cos`);
+    if (ch) {
+      ch.checked = true;
+    } else {
+      console.log("id cos virtual inexistent:", idp);
+    }
+  }
+
+  //----------- adaugare date in cosul virtual (din localStorage)
+  let checkboxuri = document.getElementsByClassName("select-cos");
+  for (let ch of checkboxuri) {
+    ch.onchange = function () {
+      let iduriProduse = localStorage.getItem("cos_virtual");
+      iduriProduse = iduriProduse ? iduriProduse.split(",") : [];
+
+      if (this.checked) {
+        iduriProduse.push(this.value);
+      } else {
+        let poz = iduriProduse.indexOf(this.value);
+        if (poz != -1) {
+          iduriProduse.splice(poz, 1);
+        }
+      }
+
+      localStorage.setItem("cos_virtual", iduriProduse.join(","));
+    };
+  }
   document.getElementById("inp-pret").oninput = function () {
     document.getElementById("infoRange").innerHTML = `(${this.value})`;
   };
   function filtrare() {
-    console.log("!!!!!!!!!!!!!!");
-    console.log(document.getElementById("i_textarea").value);
     if (/^[A-Za-z]*$/.test(document.getElementById("i_textarea").value)) {
       document.getElementById("i_textarea").classList.remove("is-invalid");
     } else {
       document.getElementById("i_textarea").classList.add("is-invalid");
     }
-    let val_nume = document.getElementById("inp-nume").value.toLowerCase();
+    let val_desc = document.getElementById("inp-descriere").value.toLowerCase();
+
+    console.log("Dupa prelucrare ", val_desc);
     let val_nrjuc;
     let gr_radio = document.getElementsByName("gr_rad");
 
@@ -36,29 +81,26 @@ window.addEventListener("load", function () {
       }
     }
 
-    let gr_check = document.getElementsByName("gr_chck");
+    let gr_check = document.getElementsByName("nou-check");
+    console.log(gr_check);
 
     let val_exped = [];
     let i = 0;
 
-    for (let ch of gr_check) {
+    /*  for (let ch of gr_check) {
       if (ch.checked) {
-        console.log("E bifat");
         val_exped[i] = ch.value;
         i++;
       }
-    }
+    } */
 
     let val_pret = document.getElementById("inp-pret").value;
-    console.log(val_pret);
+
     let val_categ = document.getElementById("inp-categorie").value;
 
     let val_dispo = document.getElementById("i_datalist").value;
 
     let val_textarea = document.getElementById("i_textarea").value;
-
-    console.log(val_categ);
-    console.log(document.getElementById("infoRange").innerHTML);
 
     var produse = document.getElementsByClassName("produs");
 
@@ -69,13 +111,40 @@ window.addEventListener("load", function () {
       }
     }
 
+    if (!/^[A-Za-zț]*$/.test(document.getElementById("inp-descriere").value)) {
+      alert("In campul descriere puteti introduce doar litere");
+      document.getElementById("inp-descriere").value = "toate";
+    }
+
+    for (let i = 1; i <= val_desc.length; i++) {
+      if (val_desc[i] == "ș") {
+        val_desc = replaceAtIndex("s", val_desc, i);
+      }
+
+      if (val_desc[i] == "ă" || val_desc[i] == "â") {
+        val_desc = replaceAtIndex("a", val_desc, i);
+      }
+
+      if (val_desc[i] == "ț") {
+        console.log("!!!!!!!!");
+        val_desc = replaceAtIndex("t", val_desc, i);
+        console.log(val_desc[i]);
+      }
+    }
+
     for (let prod of produse) {
       prod.style.display = "none";
-      let nume = prod
-        .getElementsByClassName("val-nume")[0]
-        .innerHTML.toLowerCase();
-
-      let cond1 = nume.startsWith(val_nume);
+      let cond1;
+      if (val_desc == "toate") {
+        cond1 = true;
+      } else {
+        let descriere = prod
+          .getElementsByClassName("val-descriere")[0]
+          .innerHTML.toLowerCase();
+        console.log("Descrierea din baza " + descriere);
+        console.log(val_desc);
+        cond1 = descriere.includes(val_desc);
+      }
 
       let cond2 = true;
 
@@ -106,27 +175,32 @@ window.addEventListener("load", function () {
 
       let cond6 = true;
 
-      if (!val_exped.includes("toate")) {
+      /*  if (!val_exped.includes("toate")) {
         let exped = prod.getElementsByClassName("val-expediere")[0].innerHTML;
         cond6 = val_exped.includes(exped);
-        console.log(exped);
-        console.log(val_exped);
-        console.log(cond6);
-      }
-
-      console.log(cond6);
+      }*/
+      for (let ch of gr_check)
+        if (ch.checked) {
+          console.log("heiiiiiiiiii");
+          let data = prod.getElementsByClassName("val-adaugare")[0].innerHTML;
+          let data2 = new Date("6/01/2023");
+          console.log(data);
+          console.log(data2);
+          if (data < data2) {
+            cond6 = false;
+          }
+        }
 
       let cond7;
       if (val_textarea == "orice") {
         cond7 = true;
       } else {
-        let textarea = prod.getElementsByClassName("val-culoare")[0].innerHTML;
+        let textarea = prod.getElementsByClassName("val-nume")[0].innerHTML;
 
-        cond7 = val_textarea.startsWith(textarea);
+        cond7 = textarea.startsWith(val_textarea);
       }
 
       let jucarie = prod.getElementsByClassName("val-categorie")[0].innerHTML;
-      console.log(jucarie);
 
       let cond8;
       if (val_jucarie.includes("toate")) {
@@ -134,9 +208,6 @@ window.addEventListener("load", function () {
       } else {
         cond8 = val_jucarie.includes(jucarie);
       }
-      console.log(cond7);
-      console.log(val_textarea);
-
       if (
         cond1 &&
         cond2 &&
@@ -152,47 +223,72 @@ window.addEventListener("load", function () {
     }
   }
 
-  document.getElementById("inp-nume").onchange = filtrare;
-  document.getElementById("inp-nume").onkeyup = filtrare;
+  document.getElementById("inp-descriere").onchange = filtrare;
+  document.getElementById("inp-descriere").onkeyup = filtrare;
   document.getElementById("butoane").onchange = filtrare;
   document.getElementById("inp-pret").onchange = filtrare;
   document.getElementById("inp-categorie").onchange = filtrare;
   document.getElementById("inp-jucarie").onchange = filtrare;
   document.getElementById("i_datalist").onchange = filtrare;
-  document.getElementsByName("gr_chck").onchange = filtrare;
+  document.getElementsByName("nou").onchange = filtrare;
   document.getElementById("i_textarea").onchange = filtrare;
   document.getElementById("i_textarea").onkeyup = filtrare;
   document.getElementById("filtrare").onclick = filtrare;
 
   document.getElementById("resetare").onclick = function () {
-    document.getElementById("inp-nume").value = "";
+    if (confirm("Sunteti sigur ca doriti sa resetati filtrele?")) {
+      document.getElementById("inp-descriere").value = "";
 
-    document.getElementById("inp-pret").value =
-      document.getElementById("inp-pret").min;
-    document.getElementById("inp-categorie").value = "toate";
-    document.getElementById("i_rad4").checked = true;
-    var produse = document.getElementsByClassName("produs");
-    document.getElementById("infoRange").innerHTML = "(0)";
-    for (let prod of produse) {
-      prod.style.display = "block";
+      document.getElementById("inp-pret").value =
+        document.getElementById("inp-pret").min;
+      document.getElementById("inp-categorie").value = "toate";
+      document.getElementById("i_rad4").checked = true;
+      var produse = document.getElementsByClassName("produs");
+      document.getElementById("infoRange").innerHTML = "(0)";
+    } else {
+      let p = document.createElement("p");
+      p.innerHTML = "Resetare incompleta";
+      p.id = "info-reset";
+      let ps = document.getElementById("p-suma");
+      container = ps.parentNode;
+      let frate = ps.nextElementSibling;
+      container.insertBefore(p, frate);
+
+      setTimeout(function () {
+        let info = document.getElementById("info-reset");
+        if (info) {
+          info.remove();
+        }
+      }, 1000);
     }
   };
   function sortare(semn) {
     var produse = document.getElementsByClassName("produs");
     var v_produse = Array.from(produse);
     v_produse.sort(function (a, b) {
-      let pret_a = parseFloat(
-        a.getElementsByClassName("val-pret")[0].innerHTML
-      );
-      let pret_b = parseFloat(
-        b.getElementsByClassName("val-pret")[0].innerHTML
-      );
-      if (pret_a == pret_b) {
-        let nume_a = a.getElementsByClassName("val-nume")[0].innerHTML;
-        let nume_b = b.getElementsByClassName("val-nume")[0].innerHTML;
-        return semn * nume_a.localeCompare(nume_b);
+      let nume_a = a.getElementsByClassName("val-nume")[0].innerHTML;
+      let nume_b = b.getElementsByClassName("val-nume")[0].innerHTML;
+
+      if (nume_a.localeCompare(nume_b) == 0) {
+        let pret_a = parseFloat(
+          a.getElementsByClassName("val-pret")[0].innerHTML
+        );
+        let pret_b = parseFloat(
+          b.getElementsByClassName("val-nume")[0].innerHTML
+        );
+
+        let juc_a = parseFloat(
+          a.getElementsByClassName("val-nrjuc")[0].innerHTML
+        );
+        let juc_b = parseFloat(
+          b.getElementsByClassName("val-nrjuc")[0].innerHTML
+        );
+
+        let rap_a = pret_a / juc_a;
+        let rap_b = pret_b / juc_b;
+        return semn * (rap_a - rap_b);
       }
-      return semn * (pret_a - pret_b);
+      return semn * nume_a.localeCompare(nume_b);
     });
     for (let prod of v_produse) {
       prod.parentElement.appendChild(prod);
@@ -205,10 +301,9 @@ window.addEventListener("load", function () {
     sortare(-1);
   };
 
-  document.getElementById("ok2").onclick = checkCookie;
+  //document.getElementById("ok2").onclick = checkCookie;
 
   window.onkeydown = function (e) {
-    console.log(e);
     if (document.getElementById("info-suma")) {
       return;
     }
@@ -224,13 +319,13 @@ window.addEventListener("load", function () {
         }
       }
 
-      let p = document.createElement("p");
-      p.innerHTML = suma;
-      p.id = "info-suma";
+      let div = document.createElement("div");
+      div.innerHTML = suma;
+      div.id = "info-suma";
       let ps = document.getElementById("p-suma");
       container = ps.parentNode;
       let frate = ps.nextElementSibling;
-      container.insertBefore(p, frate);
+      container.insertBefore(div, frate);
 
       setTimeout(function () {
         let info = document.getElementById("info-suma");

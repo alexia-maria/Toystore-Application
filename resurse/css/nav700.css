@@ -1,5 +1,6 @@
 nav {
   font-size: 12px;
+  background-color: var(--culoare-grid);
 }
 
 #hamburger {
@@ -16,6 +17,14 @@ nav {
 
 ul.meniu {
   display: none;
+}
+
+ul.meniu > li {
+  background-color: var(--culoare-grid);
+}
+
+ul.meniu > li:hover {
+  background-color: var(--grid-diferit);
 }
 
 #ch-menu:checked + ul.meniu {

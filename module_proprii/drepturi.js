@@ -1,4 +1,3 @@
-
 /**
  @typedef Drepturi
  @type {Object}
@@ -9,16 +8,19 @@
  @property {Symbol} vizualizareGrafice Dreptul de a vizualiza graficele de vanzari
  */
 
-
 /**
  * @name module.exports.Drepturi
  * @type Drepturi
  */
 const Drepturi = {
-	vizualizareUtilizatori: Symbol("vizualizareUtilizatori"),
-	stergereUtilizatori: Symbol("stergereUtilizatori"),
-	cumparareProduse: Symbol("cumparareProduse"),
-	vizualizareGrafice: Symbol("vizualizareGrafice")
-}
+  vizualizareUtilizatori: Symbol("vizualizareUtilizatori"),
+  stergereUtilizatori: Symbol("stergereUtilizatori"),
+  cumparareProduse: Symbol("cumparareProduse"),
+  vizualizareGrafice: Symbol("vizualizareGrafice"),
+  modificareUtilizatori: Symbol("modificareUtilizatori"),
+  adaugareProduse: Symbol("adaugareProduse"),
+  modificareProduse: Symbol("modificareProduse"),
+  vizualizareAccesari: Symbol("vizualizareaccesari"),
+};
 
-module.exports=Drepturi;
+module.exports = Drepturi;

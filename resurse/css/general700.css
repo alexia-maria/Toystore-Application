@@ -21,3 +21,11 @@ body * {
   min-width: 50px;
   max-width: 200px;
 }
+
+#banner{
+  animation-play-state: paused;
+}
+
+#cbanner{
+  animation-play-state: paused;
+}

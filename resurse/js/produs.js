@@ -9,6 +9,7 @@ window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("collapseThree").classList.toggle("show");
   };*/
   document.getElementById("buton_ac").onclick = function () {
+    console.log("!!!!!!!!!!!!!");
     if (document.getElementById("collapseThree").classList.contains("show")) {
       document.getElementById("collapseThree").classList.remove("show");
       localStorage.removeItem("collapseThree");

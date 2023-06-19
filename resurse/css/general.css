@@ -670,10 +670,10 @@ hr {
 
 @keyframes animp {
   0% {
-    text-align: right;
+    left: 100vw;
   }
   100% {
-    transform: translateX(-100%);
+    left: 0;
     text-align: left;
   }
 }
@@ -687,6 +687,7 @@ hr {
 }
 
 #banner {
+  position: relative;
   animation-name: animp;
   animation-duration: 3s;
   animation-timing-function: linear;

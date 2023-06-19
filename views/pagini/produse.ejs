@@ -3,7 +3,7 @@
     <head>
         <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
         <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse">
-     <!--   <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" /> -->
+        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
         <title>Cofetăria Dulcelind - home</title>
         <%- include("../fragmente/head") %>     
         <script type="text/javascript" src=/resurse/js/produse.js></script>
@@ -13,14 +13,15 @@
     <%- include("../fragmente/header") %>
 
     <main>
+        <%- console.log("!!!!!!!!!!!!!!"+locals.optiuniCategorie)     %> 
         <div class = "container">
         <div class = "row">
-        <div class = "col-12 col-md-6 col-xl-3"><label> Nume: <input type="text" id="inp-nume"></label></b-col>
+        <div class = "col-12 col-md-6 col-xl-3"><label> Descriere: <input type="text" id="inp-descriere"></label></b-col>
         <!--<label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label>-->
         </div>
         <div id = "butoane" class = "col-12 col-md-6 col-xl-3"> Numar de jucatori<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
             <p><label>Jocuri singleplayer
-                <input id="i_rad1"  name="gr_rad" value="0:1" type="radio"/>
+                <input id="i_rad1" name="gr_rad" value="0:1" type="radio"/>
             </label></p>
             <p><label>Intre 2 si 4 
                 <input id="i_rad2"  name="gr_rad" value="2:4" type="radio"/>
@@ -60,18 +61,10 @@
         </label>
     </div>
 
-    <div class = "col-12 col-md-6 col-xl-3"> Modul de expediere
-         <label id = "exped"><%- locals.optiuniExpediere[0].unnest %>
-            <input id="i_check1" name="gr_chck" value="<%- locals.optiuniExpediere[0].unnest %>" type="checkbox"/>
-        </label>
-        
-        <label id = "exped"><%- locals.optiuniExpediere[1].unnest %>
-            <input id="i_check2" name="gr_chck" value="<%- locals.optiuniExpediere[1].unnest %>" type="checkbox"/>
-        </label>
-    
-        <label id = "exped">Toate
-            <input id="i_check3" name="gr_chck" checked value="toate" type="checkbox"/>
-        </label>
+
+    <div class = "col-12 col-md-6 col-xl-3 "> Noutati
+        <label id = nou></label>
+        <input class = "btn-outline-primary" id = "nou-check1" name = "nou-check" type = "checkbox"/>
     </div>
 
 <div class = "col-12 col-md-6 col-xl-3">
@@ -79,7 +72,7 @@
 
     
             <textarea id="i_textarea" class="form-control"  id="floatingTextarea2" style="height: 100px">orice</textarea>
-            <label for="floatingTextarea2">Culoare</label>
+            <label for="floatingTextarea2">Nume</label>
         
     </div>
     
@@ -90,6 +83,7 @@
                 <option id="sel-toate"  value="toate">toate</option>
                 <% for (let juc of locals.optiuniCategorie) { %>
                     <option value="<%- juc.unnest %>" selected><%- juc.unnest %> </option>
+                <%- console.log(juc.unnest) %>
                 <% } %>
             </select>
         </label>
@@ -101,8 +95,8 @@
         <button id="filtrare" class = "btn btn-primary border-1 border-light"><span class="bi bi-filter"></span>|Filtreaza</button> 
 
         <button id="resetare"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-clockwise"></span>|Reseteaza</button><br/>
-        <button id="sortCrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-up-right"></span>|Sorteaza crescator dupa pret si nume</button>
-        <button id="sortDescrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-down-right"></span>|Sorteaza descrescator dupa pret si nume</button>
+        <button id="sortCrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-up-right"></span>|Sorteaza crescator dupa nume si raport numeric</button>
+        <button id="sortDescrescNume"  class = "btn btn-primary border-1 border-light"><span class = "bi bi-arrow-down-right"></span>|Sorteaza descrescator dupa nume si raport numeric</button>
         
         </p>
         
@@ -111,34 +105,45 @@
             <h2>Produse</h2>
             <div class="grid-produse">
                 <% for( let prod of locals.produse) { %>
-                    <article class="produs" >
-                        <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
-                        <div class="info-prod">
-                            <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="varsta">Categorie de varsta: <span class="val-varsta"><%- prod.varsta%></span></p>
-                            <p class="culoare">Culoare: <span class="val-culoare"><%- prod.culoare%></span></p>
-                            <p class="numar_jucatori">Numar jucatori: <span class="val-nrjuc"><%- prod.numar_jucatori%></span></p>
-                            <p class="disponibilitate">Disponibilitate:<span class="val-disponibil"><%- prod.disponibilitate%></span></p>
-                            <p class="expediere">Expediere:<span class="val-expediere"><%- prod.expediere%></span></p>
-                        </div>
-                        <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
-                        <figure>
+                <%#  %>    <article class = "produs">
+                    <h3>Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
+
+                    
+
+                       <div class = "row">
+
+                     <div class = "col">
+                    <figure>
                             <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/galerie/<%-prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
                         </figure>
+                        <ul>
+                            <li><p class="id"><div class = "nume">Id:</div><span class="val-id"><artc-><%- prod.id%></artc-></span></p></li>
+                            <li><p class="pret"><div class = "nume">Pret: </div><span class="val-pret"><%- prod.pret%></span></p></li>
+                            <li><p class="varsta"><div class = "nume">Categorie de varsta: </div><span class="val-varsta"><%- prod.varsta%></span></p></li>
+                            <li><p class="componente"><div class = "nume">Componente: </div><span class="val-componente"><%- prod.componente%></span></p></li>
+                            <li><p class="adaugare"><div class = "nume">Data adaugare: </div><span class="val-adaugare"><%- prod.data_adaugare%></span></p></li>
+                            <li><p class="varsta"><div class = "nume">Recomandat copiilor sub 3 ani: </div><span class="val-rec"><%- prod.recomandat_sub3%></span></p></li>
+                            <li><p class="numar_jucatori"><div class = "nume">Numar jucatori: </div><span class="val-nrjuc"><%- prod.numar_jucatori%></span></p></li>
+                            <li><p class="disponibilitate"><div class = "nume">Disponibilitate:</div><span class="val-disponibil"><%- prod.disponibilitate%></span></p></li>
+                            <li><p class="expediere"><div class = "nume">Expediere:</div><span class="val-expediere"><%- prod.expediere%></span></p></li>
+
+                        </ul>
+                    </div>  
+                    <div class = "col">
+                    <p class = "categorie"><div class = "nume">Categorie:</div><span class="val-categorie"><%- prod.categorie%></span></p>
+                    <p class="descriere"><div class = "nume">Descriere: </div><span class="val-descriere"><%- prod.descriere%></span></p>
+                </div>
+                </div> 
                         <label class="selecteaza-cos">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
                         </label>
                     </article>
-                <% }%> 
+              <%  } %>
             </div>
         </section>
     </main>
 
     <%- include("../fragmente/footer") %>
-    <p id="ck2">
-        Acesta este un alt cookie
-        <button id="ok2">Accept</button>
-      </p>
     </body>
 </html>

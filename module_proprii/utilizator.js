@@ -9,7 +9,7 @@ class Utilizator {
   static tipConexiune = "local";
   static tabel = "utilizatori";
   static parolaCriptare = "tehniciweb";
-  static emailServer = "test.tweb.node@gmail.com";
+  static emailServer = "am3200394@gmail.com";
   static lungimeCod = 64;
   static numeDomeniu = "localhost:8080";
   #eroare;
@@ -45,8 +45,13 @@ class Utilizator {
 
     this.#eroare = "";
   }
-
+  /**
+   *
+   * @param {string} nume numele introdus de utilizator
+   * @returns {boolean} true daca nu contine decat caracterele pe care ni le dorim(litere ale alfabetului), false altfel
+   */
   checkName(nume) {
+    // return nume != "" && nume.match(new RegExp("^[A-Z][a-z] ?-*?[a-z]?+$/gm"));
     return nume != "" && nume.match(new RegExp("^[A-Z][a-z]+$"));
   }
 
@@ -54,6 +59,20 @@ class Utilizator {
     if (this.checkName(nume)) this.nume = nume;
     else {
       throw new Error("Nume gresit");
+    }
+  }
+
+  checkName(prenume) {
+    // return (
+    //  prenume != "" && prenume.match(new RegExp("^[A-Z][a-z] ?-*?[a-z]?+$/gm"))
+    return prenume != "" && prenume.match(new RegExp("^[A-Z][a-z]+$"));
+    //  );
+  }
+
+  set setarePrenume(prenume) {
+    if (this.checkName(prenume)) this.prenume = prenume;
+    else {
+      throw new Error("Prenume gresit");
     }
   }
 
@@ -66,10 +85,20 @@ class Utilizator {
       throw new Error("Username gresit");
     }
   }
-
+  /**
+   *
+   * @param {string} username
+   * @returns {boolean} true daca nu contine decat caracterele pe care ni le dorim, false altfel
+   */
   checkUsername(username) {
     return username != "" && username.match(new RegExp("^[A-Za-z0-9#_./]+$"));
   }
+
+  /**
+   *
+   * @param {string} parola parola care trebuie criptata
+   * @returns {string} parola rezultata in urma criptarii
+   */
 
   static criptareParola(parola) {
     return crypto
@@ -99,15 +128,22 @@ class Utilizator {
         if (err) console.log(err);
 
         utiliz.trimiteMail(
-          "Te-ai inregistrat cu succes",
-          "Username-ul tau este " + utiliz.username,
-          `<h1>Salut!</h1><p style='color:blue'>Username-ul tau este ${utiliz.username}.</p> <p><a href='http://${Utilizator.numeDomeniu}/cod/${utiliz.username}/${token}'>Click aici pentru confirmare</a></p>`
+          "Cont nou",
+          "Bine ai venit in comunitatea Funtopia. Username-ul tau este " +
+            utiliz.username,
+          `<h1>Bine ai venit in comunitatea Funtopia!</h1><div>Username-ul tau este<p style='color:green'><b>${utiliz.username}.<b><p></div> <p><a href='http://${Utilizator.numeDomeniu}/cod/${utiliz.username}/${token}'>Click aici pentru confirmare</a></p>`
         );
       }
     );
   }
   //xjxwhotvuuturmqm
-
+  /**
+   *
+   * @param {string} subiect
+   * @param {string} mesajText
+   * @param {string} mesajHtml
+   * @param {Array} atasamente
+   */
   async trimiteMail(subiect, mesajText, mesajHtml, atasamente = []) {
     var transp = nodemailer.createTransport({
       service: "gmail",
@@ -115,7 +151,7 @@ class Utilizator {
       auth: {
         //date login
         user: Utilizator.emailServer,
-        pass: "rwgmgkldxnarxrgu",
+        pass: "ukisbvgowfzalahc",
       },
       tls: {
         rejectUnauthorized: false,
@@ -132,7 +168,11 @@ class Utilizator {
     });
     console.log("trimis mail");
   }
-
+  /**
+   *
+   * @param {string} username username-ul pe care il cautam
+   * @returns {Object}
+   */
   static async getUtilizDupaUsernameAsync(username) {
     if (!username) return null;
     try {
@@ -141,7 +181,7 @@ class Utilizator {
       ).selectAsync({
         tabel: "utilizatori",
         campuri: ["*"],
-        conditiiAnd: [`username='${username}'`],
+        vectorConditii: [[`username='${username}'`]],
       });
       if (rezSelect.rowCount != 0) {
         return new Utilizator(rezSelect.rows[0]);
@@ -154,6 +194,13 @@ class Utilizator {
       return null;
     }
   }
+  /**
+   *
+   * @param {string} username username-ul cautat
+   * @param {Object} obparam un obiect care are anumite campuri setate
+   * @param {function} proceseazaUtiliz o functie callback care verifica daca parametrii setati ai obiectului transmis ca parametru corespund username-ului dorit
+   * @returns daca nu apar erori apeleaza functia callback
+   */
   static getUtilizDupaUsername(username, obparam, proceseazaUtiliz) {
     if (!username) return null;
     let eroare = null;
@@ -161,7 +208,7 @@ class Utilizator {
       {
         tabel: "utilizatori",
         campuri: ["*"],
-        conditiiAnd: [`username='${username}'`],
+        vectorConditii: [[`username='${username}'`]],
       },
       function (err, rezSelect) {
         let u = null;
@@ -174,7 +221,7 @@ class Utilizator {
           eroare = -1;
         } else {
           //constructor({id, username, nume, prenume, email, rol, culoare_chat="black", poza}={})
-          let u = new Utilizator(rezSelect.rows[0]);
+          u = new Utilizator(rezSelect.rows[0]);
         }
         proceseazaUtiliz(u, obparam, eroare);
       }
